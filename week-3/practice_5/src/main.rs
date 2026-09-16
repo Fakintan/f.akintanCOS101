@@ -1,6 +1,6 @@
 fn main() {
     let special_character = "@";    // default
-    let alphabet = "A";
+    let alphabet = 'A';
     let surname = "Akintan";
     let first_name = "Faith";
     let middle_name = "inumidun";

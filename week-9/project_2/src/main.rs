@@ -1,37 +1,56 @@
+use std::io;
+use std::fs::OpenOptions;
 use std::io::Write;
-
 fn main() {
-// creating the Pau-smis file
-    let mut file = std::fs::File::create("PAU-SMIS.csv").expect("create failed");
-    file.write_all("                 PAU-SMIS                 \n"
-        .as_bytes()).expect("write failed");
-    file.write_all("Student Name, Matric. Number, Department, Level\n"
-        .as_bytes()).expect("write failed");
-// Storing the student details as vectors
-    let students = vec![("Oluchi Mordi", "ACC10211111", "Accounting", "300"),
-                        ("Adams Aliyu", "ECO10110101", "Economics", "100"),
-                        ("Shania Bolade", "CSC10328828", "Computer", "200"),
-                        ("Adekunle Gold", "EEE11020202", "Electrical", "200"),
-                        ("Blanca Edemoh", "MEE10202001", "Mechanical", "100"),];
+	let mut file = OpenOptions::new().create(true).append(true).open("PAU_SMIS.csv").expect("cannot open file");
+    let mut students = Vec::new();
 
-    for student in students {
-        println!("{}, {}, {}, {}",student.0, student.1, student.2, student.3);
+	let mut num = String::new();
+	println!("How many student details would you like  to input");
+	
+	io::stdin().read_line(&mut num).expect("Failed to read input");
+	let num1:usize= num.trim().parse().expect("Please input a valid digit");
 
-    let mut record = String::new();
+	for i in 0..num1 {
+		let mut name = String::new();
+		println!("Enter student's name {}", i + 1);
+		io::stdin().read_line(&mut name).expect("Failed to read input");
 
-    record.push_str(student.0);
-    record.push_str(",");
-    record.push_str(student.1);
-    record.push_str(",");
-    record.push_str(student.2);
-    record.push_str(",");
-    record.push_str(student.3);
-    record.push_str("\n");
+		let mut matric_no = String::new();
+		println!("Enter matric number");
+		io::stdin().read_line(&mut matric_no).unwrap();
 
-    file.write_all(record.as_bytes()).expect("write failed");
+		let mut dept = String::new();
+		println!("Enter the department");
+		io::stdin().read_line(&mut dept).unwrap();
 
+		let mut level = String::new();
+		println!("Enter the student's level");
+		io::stdin().read_line(&mut level).unwrap();
+		let level1:usize = level.trim().parse().unwrap();
+
+		students.push((name.trim().to_string(), matric_no.trim().to_string(), dept.trim().to_string(), level1));
+	}
+
+	for student in students{
+		println!("{}, {}, {}, {}", student.0, student.1, student.2, student.3);
+	
+	let record = format!("{}, {}, {}, {}\n", 
+		student.0, 
+		student.1, 
+		student.2, 
+		student.3);
+
+	file.write_all(record.as_bytes()).unwrap();
     }
 
+    println!("The students details has been saved successfully");
+
+ 
+
+
+
+	
 
     
 }

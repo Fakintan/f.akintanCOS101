@@ -1,31 +1,53 @@
 use std::io::Write;
 
+use std::io::Read;
+
 fn main() {
-    let mut file = std::fs::File::create("The EFCC Merge.csv").expect("Create failed");
-    file.write_all("        The EFCC Merge      \n"
-        .as_bytes()).expect("write failed");
-    file.write_all("Commisioner, Ministry, Zone\n"
-        .as_bytes()).expect("write failed");
+    //let mut records = Vec::new();
+    let mut file1 = std::fs::File::open("Commissioner.csv").expect("open failed");
+    let mut commissioner = String::new();
+    file1.read_to_string(&mut commissioner).expect("failed");
+    let commissioner = commissioner.trim().split("\r\n");
+    let mut comms: Vec<&str> = Vec::new();
 
-    let commissioners = vec!["Aigbogun Alamba Daudu", "Murtala Afeez Bendu", "Okorocha Calistus Ogbona", "Adewale Jimoh Akanbi", "Osazuwa Faith Etieye"];
-    let ministry = vec!["Internal Affairs", "Justice", "Defense", "Power & Steel", "Petroleum"];
-    let zone = vec!["South West", "North East", "South South", "South West", "South East"];
+    let mut file2 = std::fs::File::open("Ministry.csv").unwrap();
+    let mut ministry = String::new();
+    file2.read_to_string(&mut ministry).expect("failed");
+    let ministry = ministry.trim().split("\r\n");
+    let mut mins: Vec<&str> = Vec::new();
 
-    for i in 0..commissioners.len() {
-        let mut dataset = String::new();
+    let mut file3 = std::fs::File::open("Zone.csv").unwrap();
+    let mut zone = String::new();
+    file3.read_to_string(&mut zone).expect("failed");
+    let zone = zone.trim().split("\r\n");
+    let mut zon: Vec<&str> = Vec::new();
 
-        dataset.push_str(commissioners[i]);
-        dataset.push_str(",");
-        dataset.push_str(ministry[i]);
-        dataset.push_str(",");
-        dataset.push_str(zone[i]);
-        dataset.push_str("\n");
+    let mut file4 = std::fs::File::create("The EFCC Merge.csv").expect("create failed");
+    
 
-    file.write_all(dataset.as_bytes()).expect("write failed")
+    for a in commissioner{
+        comms.push(a);
     }
-    println!("The EFCC Merge file has been created successfully");
+
+    for b in ministry{
+        mins.push(b);
+    }
+
+    for c in zone{
+        zon.push(c);
+    }
+    println!("😊😊😊😊😊😊😊😊😊😊😊😊😊 Your files have been merged successfully!");
+     
+    for i in 0..6{
+        file4.write_all(format!("{}, {}, {}\n", comms[i], mins[i], zon[i]).as_bytes()).unwrap();
+    }
     
+    
+   
+   
 
 
-    
+
+
+  
 }

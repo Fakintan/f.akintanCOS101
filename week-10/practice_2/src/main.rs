@@ -5,13 +5,13 @@ fn main() {
 
    let v2 = v;     // moves ownership to v2
 
-   display(v2);
+   display(&v2);
    // v2 is moved to display and v2 is invalidated
 
-   print!("In main {:?}", v2);
+   println!("In main {:?}", v2);
    //v2 is No longer usable here
 }
 
-fn display(v:Vec<i32>) {
+fn display(v:&Vec<i32>) {
     println!("inside display {:?}", v);
 }

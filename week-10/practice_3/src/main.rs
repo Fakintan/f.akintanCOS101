@@ -4,11 +4,11 @@ fn main() {
    //vector v owns the object in heap
 
    let v2 = v;
-   let v2_return = diplay(v2);
-   println!("In main {:?}", v);
+   let v2_return = display(v2);
+   println!("In main {:?}", v2_return);
 
 }
-fn display(v:Vec<i32>)->Vec<i32> {
+fn display(v:Vec<i32>) ->Vec<i32> {
     // returning same vector
     println!("Inside display {:?}", v);
     return v;
